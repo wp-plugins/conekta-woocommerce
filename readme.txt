@@ -34,6 +34,8 @@ Replace to tusitio.com with your domain name
 
 == Screenshots ==
 
+1. As shown in the screenshot-1.png, you will need to add information from your conekta account
+
 == Changelog ==
 
 = 0.1.0 =
