@@ -32,3 +32,18 @@ http://tusitio.com/wc-api/WC_Conekta_Cash_Gateway
 
 Replace to tusitio.com with your domain name
 
+== Screenshots ==
+
+== Changelog ==
+
+= 0.1.0 =
+* Online payments
+* Sandbox testing capability.
+* Option to save customer profile.
+* Card validation at Conekta's servers so you don't have to be PCI.
+* Client side validation for credit cards.
+
+= 0.1.1 =
+* Offline payments
+* Barcode sent in mail and displayed in order the confirmation page
+* Order Status changed dynamically once webhook is added in Conekta.io Account 
