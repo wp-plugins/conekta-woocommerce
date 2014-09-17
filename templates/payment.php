@@ -58,16 +58,12 @@
     });
 
            var conektaErrorResponseHandler = function(response) {
-           console.log("fail")
-
            $form.find('.payment-errors').text(response.message);
            $form.unblock();
 
              };
            
     var conektaSuccessResponseHandler = function(response) {
-           console.log("success")
-
       $form.append($('<input type="hidden" name="conektaToken" />').val(response.id));
       $form.submit();
 
