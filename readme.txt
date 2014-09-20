@@ -1,6 +1,6 @@
-=== Conekta Woocommerce v.0.1.1 ===
+=== Conekta Woocommerce ===
 Contributors: cristinarandall
-Tags: conekta, payment gateway
+Tags: free, oxxo, conekta, mexico, payment gateway
 Requires at least: 3.5.2
 Tested up to: 4.0
 Stable tag: 4.3
@@ -24,6 +24,7 @@ Current version features:
 
 == Installation ==
 
+* Make sure that you have at least PHP Version 5.4 since the Conekta PHP library requires this version
 * Upload the plugin zip file in Plugins > Add New and then click "Install Now"
 * Once installed, activate the plugin.
 * Add your API keys in Woocommerce > Settings > Checkout from your Conekta account (admin.conekta.io) in https://admin.conekta.io#developers.keys
