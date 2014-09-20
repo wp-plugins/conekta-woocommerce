@@ -2,7 +2,7 @@
 Contributors: cristinarandall
 Tags: conekta, payment gateway
 Requires at least: 3.5.2
-Tested up to: 3.5.2
+Tested up to: 4.0
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
