@@ -35,8 +35,8 @@ Replace to tusitio.com with your domain name
 
 == Screenshots ==
 
-1. As shown in the `/assets/screenshot-1.png`, you will need to add information from your conekta account
-2. As shown in the `/assets/screenshot-4.png`, you will need o configure webhooks correctly in your conekta account
+1. As shown in the `/assets/screenshot-1.jpg`, you will need to add information from your conekta account
+2. As shown in the `/assets/screenshot-4.jpg`, you will need o configure webhooks correctly in your conekta account
 
 == Changelog ==
 
