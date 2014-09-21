@@ -34,7 +34,7 @@ http://tusitio.com/wc-api/WC_Conekta_Cash_Gateway
 Replace to tusitio.com with your domain name
 
 == Screenshots ==
-1. As shown, you will need to add information from your conekta account
+1. In your Woocommerce admin in Settings > Checkout, you will need to add the API Keys from your Conekta.io account
 2. Also, you will need o configure webhooks correctly in your conekta account adding http://tusitio.com/wc-api/WC_Conekta_Cash_Gateway so that the order status changes dynamically
 3. Once the user pays with the barcode or reference the order status in your Woocommerce admin will automatically change  
 4. You will need to configure SSL since the user will be entering their credit card information directly in the checkout. They will not be redirected to another page.
