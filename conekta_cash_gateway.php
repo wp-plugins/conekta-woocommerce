@@ -174,7 +174,7 @@
                         'unit_price' => $item['line_total'],
                         'description' =>$item['name'],
                         'quantity' =>$item['qty'],
-                        'sku' =>$sku,
+                        'sku' => $item['product_id'],
                         'type' => $item['type']
                         ))
                         );
