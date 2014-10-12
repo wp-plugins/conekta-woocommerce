@@ -8,8 +8,6 @@
      * Url     : https://github.com/cristinarandall/conekta-woocommerce 
      */
    
-    //extend WC’s base gateway class, http://docs.woothemes.com/wc-apidocs/class-WC_Payment_Gateway.html
-
     class WC_Conekta_Card_Gateway extends WC_Payment_Gateway
     {
         protected $GATEWAY_NAME               = "WC_Conekta_Card_Gateway";
@@ -140,11 +138,14 @@
                 $line_items = array();
                 $items = $this->order->get_items();
                 foreach ($items as $item) {
+                        $productmeta = new WC_Product( $item['product_id']);
+                        $sku = $productmeta->get_sku();
                         $line_items = array_merge($line_items, array(array(
                         'name' => $item['name'],
                         'unit_price' => $item['line_total'],
                         'description' =>$item['name'],
                         'quantity' =>$item['qty'],
+                        'sku' =>$sku,
                         'type' => $item['type']
                         ))
                         );

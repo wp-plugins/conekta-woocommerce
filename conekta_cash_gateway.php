@@ -168,13 +168,13 @@
                 $items = $this->order->get_items();
                 foreach ($items as $item) {
    			$productmeta = new WC_Product( $item['product_id']);
- 			$sku = $productmeta->post->sku;
+ 			$sku = $productmeta->get_sku();
                         $line_items = array_merge($line_items, array(array(
                         'name' => $item['name'],
                         'unit_price' => $item['line_total'],
                         'description' =>$item['name'],
                         'quantity' =>$item['qty'],
-                        'sku' => $item['product_id'],
+                        'sku' => $sku,
                         'type' => $item['type']
                         ))
                         );
