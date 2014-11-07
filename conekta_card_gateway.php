@@ -38,7 +38,7 @@
             $this->secret_key         = $this->usesandboxapi ? $this->testApiKey : $this->liveApiKey;
             add_action('woocommerce_update_options_payment_gateways_' . $this->id , array($this, 'process_admin_options'));
             add_action('admin_notices'                              , array(&$this, 'perform_ssl_check'    ));
-            wp_enqueue_script('the_conekta_js', 'https://conektaapi.s3.amazonaws.com/v0.3.0/js/conekta.js' );
+            wp_enqueue_script('the_conekta_js', 'https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js' );
         }
        
         /**
