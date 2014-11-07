@@ -2,7 +2,7 @@
 /*
  * Title   : Conekta Payment extension for WooCommerce
  * Author  : Cristina Randall
- * Url     : https://github.com/cristinarandall/conekta-woocommerce 
+ * Url     : https://www.conekta.io/es/docs/plugins/woocommerce
  */
 ?>
 <div id="conekta_pub_key" class="hidden" style="display:none" data-publishablekey="<?=$this->publishable_key ?>"> </div>
@@ -19,11 +19,39 @@
 <div class="clear"></div>
 <p class="form-row form-row-first">
   <label>Mes de expiración <span class="required">*</span></label>
-  <input type="text" data-conekta="card[exp_month]" class="input-text" />
+<select id="card_expiration" data-conekta="card[exp_month]" class="month" autocomplete="off">
+         <option selected="selected" value=""> Mes</option>
+         <option value="1">01 - January</option>
+         <option value="2">02 - February</option>
+         <option value="3">03 - March</option>
+         <option value="4">04 - April</option>
+         <option value="5">05 - May</option>
+         <option value="6">06 - June</option>
+         <option value="7">07 - July</option>
+         <option value="8">08 - August</option>
+         <option value="9">09 - September</option>
+         <option value="10">10 - October</option>
+         <option value="11">11 - November</option>
+         <option value="12">12 - December</option>
+       </select>
 </p>
 <p class="form-row form-row-last">
   <label>Año de expiración <span class="required">*</span></label>
-  <input type="text" data-conekta="card[exp_year]" class="input-text" />
+<select id="card_expiration_yr" data-conekta="card[exp_year]" class="year" autocomplete="off">
+          <option selected="selected" value=""> Año</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+          <option value="2016">2016</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+</select>
 </p>
 <div class="clear"></div>
 <p class="form-row form-row-first">
@@ -38,29 +66,9 @@
     jQuery(function($) {
     var $form = $('form.checkout,form#order_review');
 
-    var conektaMap = {
-
-        billing_address_1:  'address_line1',
-        billing_address_2:  'address_line2',
-        billing_city:       'address_city',
-        billing_country:    'address_country',
-        billing_state:      'address_state',
-        billing_postcode:   'address_zip',
-    }
-    var card_name = '';
-    $('form.checkout').find('input[id*=billing_],select[id*=billing_]').each(function(idx,el){
-        var mapped = conektaMap[el.id];
-        if (mapped)
-        {
-            $(el).attr('data-conekta',mapped);
-            
-        }
-    });
-
            var conektaErrorResponseHandler = function(response) {
            $form.find('.payment-errors').text(response.message);
            $form.unblock();
-
              };
            
     var conektaSuccessResponseHandler = function(response) {
@@ -97,7 +105,6 @@
       $form.find('.payment-errors').html('');
       $form.block({message: null,overlayCSS: {background: "#fff url(" + woocommerce_params.ajax_loader_url + ") no-repeat center",backgroundSize: "16px 16px",opacity: .6}});
 
-      // Pass if we have a token
       if( $form.find('[name=conektaToken]').length)
         return true;
 
