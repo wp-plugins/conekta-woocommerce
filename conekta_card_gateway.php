@@ -153,7 +153,7 @@
                                                            "amount"      => $data['amount'],
                                                            "currency"    => $data['currency'],
                                                            "description" => "Compra con orden # ". $this->order->id,
-							   "reference_id" => $this->order->id,
+                                                           "reference_id" => $this->order->id,
                                                            "card"    => $customer->id,
                                                            "details"     => $details,
                                                            ));
@@ -163,7 +163,7 @@
                                                            "amount"      => $data['amount'],
                                                            "currency"    => $data['currency'],
                                                            "card"        => $data['token'],
-							   "reference_id" => $this->order->id,
+                                                           "reference_id" => $this->order->id,
                                                            "description" => "Compra con orden # ". $this->order->id,
                                                            "details"     => $details,
                                                            ));
@@ -219,7 +219,7 @@
             if ($this->order->status == 'completed')
                 return;
            
-	    // adjust stock levels and change order status 
+            // adjust stock levels and change order status
             $this->order->payment_complete();
             $woocommerce->cart->empty_cart();
             
