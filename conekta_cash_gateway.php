@@ -5,7 +5,7 @@
     /*
      * Title   : Conekta Payment extension for WooCommerce
      * Author  : Cristina Randall
-     * Url     : https://github.com/cristinarandall/conekta-woocommerce
+     * Url     : https://wordpress.org/plugins/conekta-woocommerce
      */
     
     class WC_Conekta_Cash_Gateway extends WC_Payment_Gateway
@@ -161,38 +161,16 @@
         protected function send_to_conekta()
         {
             global $woocommerce;
+            include_once('conekta_gateway_helper.php');
             Conekta::setApiKey($this->secret_key);
             Conekta::setLocale("es");
-            $data = $this->getRequestData();
+            $data = getRequestData($this->order);
                 $line_items = array();
                 $items = $this->order->get_items();
-                foreach ($items as $item) {
-   			$productmeta = new WC_Product( $item['product_id']);
- 			$sku = $productmeta->get_sku();
-                        $line_items = array_merge($line_items, array(array(
-                        'name' => $item['name'],
-                        'unit_price' => $item['line_total'],
-                        'description' =>$item['name'],
-                        'quantity' =>$item['qty'],
-                        'sku' => $sku,
-                        'type' => $item['type']
-                        ))
-                        );
-                }
-            $details = array(
-                                        "email" => $data['card']['email'],
-                                        "name" => $data['card']['name'],
-                                        "line_items"  =>$line_items,
-                                        "billing_address"  => array(
-                                                                "street1" => $data['card']['address_line1'],
-                                                                "street2" => $data['card']['address_line2'],
-                                                                "zip" => $data['card']['address_zip'],
-                                                                "city" => $data['card']['address_city'],
-                                                                "phone" => $data['card']['phone'],
-                                                                "country" => $data['card']['address_country'],
-                                                                "state" => $data['card']['address_state']
-                                                                )
-			    );
+            
+            $line_items = build_line_items($items);
+            $details = build_details($data,$line_items);
+          
  
             try {
   
@@ -279,31 +257,6 @@
                                          );
             
             unset($_SESSION['order_awaiting_payment']);
-        }
-        
-        
-        protected function getRequestData()
-        {
-            if ($this->order AND $this->order != null)
-            {
-                return array(
-                             "amount"      => (float)$this->order->get_total() * 100,
-                             "currency"    => strtolower(get_woocommerce_currency()),
-                             "description" => sprintf("Charge for %s", $this->order->billing_email),
-                             "card"        => array(
-                                                    "name"            => sprintf("%s %s", $this->order->billing_first_name, $this->order->billing_last_name),
-                                                    "address_line1"   => $this->order->billing_address_1,
-                                                    "address_line2"   => $this->order->billing_address_2,
-                                                    "phone"   => $this->order->billing_phone,
-                                                    "email"   => $this->order->billing_email,
-                                                    "address_city"     => $this->order->billing_city,
-                                                    "address_zip"     => $this->order->billing_postcode,
-                                                    "address_state"   => $this->order->billing_state,
-                                                    "address_country" => $this->order->billing_country
-                                                    )
-                             );
-            }
-            return false;
         }
         
     }
