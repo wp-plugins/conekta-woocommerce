@@ -4,7 +4,7 @@
     }
     /*
      * Title   : Conekta Payment extension for WooCommerce
-     * Author  : Cristina Randall
+     * Author  : Conekta.io
      * Url     : https://wordpress.org/plugins/conekta-woocommerce
      */
     
@@ -129,8 +129,12 @@
          * @param WC_Order $order
          */
         function email_barcode($order) {
-            echo '<strong>'.__('Código Barra').':</strong> <img src="' . get_post_meta( $order->id, 'conekta-barcodeurl', true ). '" />';
-            echo '<p><strong>'.__('Referencia').':</strong> ' . get_post_meta( $order->id, 'conekta-barcode', true ). '</p>';
+
+	    	if (get_post_meta( $order->id, 'conekta-barcodeurl', true ) != null)
+        	{
+            		echo '<strong>'.__('Código Barra').':</strong> <img src="' . get_post_meta( $order->id, 'conekta-barcodeurl', true ). '" />';
+            		echo '<p><strong>'.__('Referencia').':</strong> ' . get_post_meta( $order->id, 'conekta-barcode', true ). '</p>';
+        	}
         }
         
         /**

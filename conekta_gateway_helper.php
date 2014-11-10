@@ -8,6 +8,7 @@
 
     /**
      * Build the line items hash
+     * @param array $items
      */
     function build_line_items($items)
     {
@@ -31,6 +32,8 @@
     
     /**
      * Build the detail hash
+     * @param hash $data
+     * @param array $line_items
      */
     
     function build_details($data, $line_items)
@@ -56,7 +59,8 @@
 
     
     /**
-     * Bundle the order information
+     * Bundle and format the order information
+     * @param WC_Order $order
      * Send as much information about the order as possible to Conekta
      */
     function getRequestData($order)
