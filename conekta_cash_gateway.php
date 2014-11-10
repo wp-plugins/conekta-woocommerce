@@ -109,7 +109,6 @@
                                                                'default' =>__( 'Por favor realiza el pago en el OXXO más cercano utilizando la clave que mandaremos a tu e-mail.', 'woocommerce' ),
                                                                'desc_tip' => true,
                                                                ),
-                                       
                                        );
         }
         
@@ -165,12 +164,10 @@
             Conekta::setApiKey($this->secret_key);
             Conekta::setLocale("es");
             $data = getRequestData($this->order);
-                $line_items = array();
-                $items = $this->order->get_items();
-            
+            $line_items = array();
+            $items = $this->order->get_items();
             $line_items = build_line_items($items);
             $details = build_details($data,$line_items);
-          
  
             try {
   
@@ -184,7 +181,7 @@
                                                                       ),
 			                               "details"=>$details
                                                        ));
-                
+            
                 $this->transactionId = $charge->id;
                 update_post_meta( $this->order->id, 'conekta-id', $charge->id );
                 update_post_meta( $this->order->id, 'conekta-creado', $charge->created_at );
@@ -247,7 +244,6 @@
             
             $this->order->payment_complete();
             $woocommerce->cart->empty_cart();
-            
             $this->order->add_order_note(
                                          sprintf(
                                                  "%s payment completed with Transaction Id of '%s'",
