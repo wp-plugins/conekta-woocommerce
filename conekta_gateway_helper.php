@@ -70,6 +70,7 @@
             return array(
                          "amount"      => (float)$order->get_total() * 100,
                          "token"       => $_POST['conektaToken'],
+                         "monthly_installments" => (int)$_POST['monthly_installments'],
                          "currency"    => strtolower(get_woocommerce_currency()),
                          "description" => sprintf("Charge for %s", $order->billing_email),
                          "card"        => array(

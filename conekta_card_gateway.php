@@ -12,6 +12,7 @@
     {
         protected $GATEWAY_NAME               = "WC_Conekta_Card_Gateway";
         protected $usesandboxapi              = true;
+        protected $enablemeses              = false;
         protected $order                      = null;
         protected $transactionId              = null;
         protected $transactionErrorMessage    = null;
@@ -29,6 +30,7 @@
             $this->description        = '';
             $this->icon 		      = $this->settings['alternate_imageurl'] ? $this->settings['alternate_imageurl']  : WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/images/credits.png';
             $this->usesandboxapi      = strcmp($this->settings['debug'], 'yes') == 0;
+            $this->enablemeses = strcmp($this->settings['meses'], 'yes') == 0;
             $this->testApiKey 		  = $this->settings['test_api_key'  ];
             $this->liveApiKey 		  = $this->settings['live_api_key'  ];
             $this->testPublishableKey = $this->settings['test_publishable_key'  ];
@@ -61,6 +63,12 @@
                                                           'label'       => __('Enable Credit Card Payment', 'woothemes'),
                                                           'default'     => 'yes'
                                                           ),
+                                       'meses' => array(
+                                                        'type'        => 'checkbox',
+                                                        'title'       => __('Meses sin Intereses', 'woothemes'),
+                                                        'label'       => __('Enable Meses sin Intereses', 'woothemes'),
+                                                        'default'     => 'no'
+                                                        ),
                                        'debug' => array(
                                                         'type'        => 'checkbox',
                                                         'title'       => __('Testing', 'woothemes'),
@@ -139,37 +147,23 @@
                 $items = $this->order->get_items();
                 $line_items = build_line_items($items);
                 $details = build_details($data,$line_items);
-                
-                if($this->useUniquePaymentProfile)
-                {
-                    // Create the user as a customer on Conekta servers
-                    $customer = Conekta_Customer::create(array(
-                                                               "email" => $data['card']['email'],
-                                                               "description" => $data['card']['name'],
-                                                               "name" => $data['card']['name'],
-                                                               "cards"  => array($data['token'])
-                                                               ));
-                    $charge = Conekta_Charge::create(array(
-                                                           "amount"      => $data['amount'],
-                                                           "currency"    => $data['currency'],
-                                                           "description" => "Compra con orden # ". $this->order->id,
-                                                           "reference_id" => $this->order->id,
-                                                           "card"    => $customer->id,
-                                                           "details"     => $details,
-                                                           ));
-                } else {
+            
+ 
                     
                     $charge = Conekta_Charge::create(array(
                                                            "amount"      => $data['amount'],
                                                            "currency"    => $data['currency'],
+                                                           "monthly_installments" => $data['monthly_installments'] > 1 ? $data['monthly_installments'] : null,
                                                            "card"        => $data['token'],
                                                            "reference_id" => $this->order->id,
                                                            "description" => "Compra con orden # ". $this->order->id,
                                                            "details"     => $details,
                                                            ));
-                }
-                $this->transactionId = $charge->id;
                 
+                $this->transactionId = $charge->id;
+                if ($data['monthly_installments'] > 1) {
+                update_post_meta( $this->order->id, 'meses-sin-intereses', $data['monthly_installments']);
+                }
                 update_post_meta( $this->order->id, 'transaction_id', $this->transactionId);
                 return true;
                 

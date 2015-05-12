@@ -39,7 +39,6 @@
   <label>Año de expiración <span class="required">*</span></label>
 <select id="card_expiration_yr" data-conekta="card[exp_year]" class="year" autocomplete="off">
           <option selected="selected" value=""> Año</option>
-          <option value="2014">2014</option>
           <option value="2015">2015</option>
           <option value="2016">2016</option>
           <option value="2017">2017</option>
@@ -59,6 +58,26 @@
     <input class="input-text" type="text" maxlength="4" data-conekta="card[cvc]" value=""  style="border-radius:6px"/>
 </p>
 <div class="clear"></div>
+
+<?php if ($this->enablemeses): ?>
+
+<p class="form-row form-row-first">
+<label> Tipo de Pago <span class="required">*</span></label>
+<select id="monthly_installments" name="monthly_installments" autocomplete="off">
+<option selected="selected" value="1"> Pago único</option>
+<option value="3"> 3 meses </option>
+<option value="6"> 6 meses </option>
+<option value="12"> 12 meses </option>
+</select>
+</p>
+
+<?php endif; ?>
+
+
+<div class="clear"></div>
+
+
+
 
 <script>
 

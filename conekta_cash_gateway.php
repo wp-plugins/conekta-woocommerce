@@ -184,8 +184,7 @@
                                                                       "type"=>"oxxo"                        
                                                                       ),
 			                               "details"=>$details
-                                                       ));
-            
+                                                       ));           
                 $this->transactionId = $charge->id;
                 update_post_meta( $this->order->id, 'conekta-id', $charge->id );
                 update_post_meta( $this->order->id, 'conekta-creado', $charge->created_at );
