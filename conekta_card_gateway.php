@@ -40,9 +40,9 @@
             $this->secret_key         = $this->usesandboxapi ? $this->testApiKey : $this->liveApiKey;
             add_action('woocommerce_update_options_payment_gateways_' . $this->id , array($this, 'process_admin_options'));
             add_action('admin_notices'                              , array(&$this, 'perform_ssl_check'    ));
-            wp_enqueue_script('the_conekta_js', 'https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js' );
-        }
-       
+ 
+        }        
+        
         /**
         * Checks to see if SSL is configured and if plugin is configured in production mode 
         * Forces use of SSL if not in testing 
@@ -106,12 +106,6 @@
                                                                      'title'       => __('Alternate Image to display on checkout, use fullly qualified url, served via https', 'woothemes'),
                                                                      'default'     => __('', 'woothemes')
                                                                      ),
-                                       /**'enable_unique_profile' => array(
-                                                                        'type'        => 'checkbox',
-                                                                        'title'       => __('Enable Payment Profile Creation', 'woothemes'),
-                                                                        'label'       => __('Use this to always create a Payment Profile in Conekta (always creates new profile, regardless of logged in user), and associate the charge with the profile. This allows you more easily identify order, credit, or even make an additional charge (from Conekta admin) at a later date.', 'woothemes'),
-                                                                        'default'     => 'no'
-                                                                        ),*/
                                        
                                        
                                        );
@@ -147,10 +141,8 @@
                 $items = $this->order->get_items();
                 $line_items = build_line_items($items);
                 $details = build_details($data,$line_items);
-            
- 
-                    
-                    $charge = Conekta_Charge::create(array(
+                
+                $charge = Conekta_Charge::create(array(
                                                            "amount"      => $data['amount'],
                                                            "currency"    => $data['currency'],
                                                            "monthly_installments" => $data['monthly_installments'] > 1 ? $data['monthly_installments'] : null,
