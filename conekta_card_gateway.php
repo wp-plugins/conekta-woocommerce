@@ -12,18 +12,18 @@
     {
         protected $GATEWAY_NAME               = "WC_Conekta_Card_Gateway";
         protected $usesandboxapi              = true;
-        protected $enablemeses              = false;
+        protected $enablemeses                = false;
         protected $order                      = null;
         protected $transactionId              = null;
         protected $transactionErrorMessage    = null;
-        protected $conektaTestApiKey           = '';
-        protected $conektaLiveApiKey           = '';
+        protected $conektaTestApiKey          = '';
+        protected $conektaLiveApiKey          = '';
         protected $publishable_key            = '';
         
         public function __construct()
         {
             $this->id              = 'ConektaCard';
-            $this->has_fields      = true;            
+            $this->has_fields      = true;
             $this->init_form_fields();
             $this->init_settings();
             $this->title              = $this->settings['title'];
@@ -31,10 +31,10 @@
             $this->icon 		      = $this->settings['alternate_imageurl'] ? $this->settings['alternate_imageurl']  : WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/images/credits.png';
             $this->usesandboxapi      = strcmp($this->settings['debug'], 'yes') == 0;
             $this->enablemeses = strcmp($this->settings['meses'], 'yes') == 0;
-            $this->testApiKey 		  = $this->settings['test_api_key'  ];
-            $this->liveApiKey 		  = $this->settings['live_api_key'  ];
-            $this->testPublishableKey = $this->settings['test_publishable_key'  ];
-            $this->livePublishableKey = $this->settings['live_publishable_key'  ];
+            $this->testApiKey 		  = $this->settings['test_api_key'];
+            $this->liveApiKey 		  = $this->settings['live_api_key'];
+            $this->testPublishableKey = $this->settings['test_publishable_key'];
+            $this->livePublishableKey = $this->settings['live_publishable_key'];
             $this->useUniquePaymentProfile = strcmp($this->settings['enable_unique_profile'], 'yes') == 0;
             $this->publishable_key    = $this->usesandboxapi ? $this->testPublishableKey : $this->livePublishableKey;
             $this->secret_key         = $this->usesandboxapi ? $this->testApiKey : $this->liveApiKey;
@@ -140,17 +140,17 @@
                 $line_items = array();
                 $items = $this->order->get_items();
                 $line_items = build_line_items($items);
-                $details = build_details($data,$line_items);
+                $details = build_details($data, $line_items);
                 
                 $charge = Conekta_Charge::create(array(
-                                                           "amount"      => $data['amount'],
-                                                           "currency"    => $data['currency'],
-                                                           "monthly_installments" => $data['monthly_installments'] > 1 ? $data['monthly_installments'] : null,
-                                                           "card"        => $data['token'],
-                                                           "reference_id" => $this->order->id,
-                                                           "description" => "Compra con orden # ". $this->order->id,
-                                                           "details"     => $details,
-                                                           ));
+                            "amount"      => $data['amount'],
+                            "currency"    => $data['currency'],
+                            "monthly_installments" => $data['monthly_installments'] > 1 ? $data['monthly_installments'] : null,
+                            "card"        => $data['token'],
+                            "reference_id" => $this->order->id,
+                            "description" => "Compra con orden # ". $this->order->id,
+                            "details"     => $details,
+                        ));
                 
                 $this->transactionId = $charge->id;
                 if ($data['monthly_installments'] > 1) {
@@ -162,13 +162,13 @@
             } catch(Conekta_Error $e) {
                 $description = $e->message_to_purchaser;
 
-		global $wp_version;
-		if (version_compare($wp_version, '4.1', '>=')) {
-			wc_add_notice(__('Error: ', 'woothemes') . $description , $notice_type = 'error');
-		} else {
+        		global $wp_version;
+        		if (version_compare($wp_version, '4.1', '>=')) {
+        			wc_add_notice(__('Error: ', 'woothemes') . $description , $notice_type = 'error');
+        		} else {
                		error_log('Gateway Error:' . $description . "\n");
                 	$woocommerce->add_error(__('Error: ', 'woothemes') . $description);
-		}
+        		}
                 return false;
             }
         }

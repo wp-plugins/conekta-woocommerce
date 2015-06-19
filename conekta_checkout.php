@@ -33,8 +33,8 @@ add_action('plugins_loaded', 'conekta_checkout_init_your_gateway', 0);
 * Add Conekta.js to all pages
 */
 function add_conekta_script() {
-wp_register_script('the_conekta_js', 'https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js',array('jquery'),false, false);
-    wp_enqueue_script('the_conekta_js');
+	wp_register_script('the_conekta_js', 'https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js',array('jquery'),false, false);
+  wp_enqueue_script('the_conekta_js');
 }
 
 add_action('wp_enqueue_scripts', 'add_conekta_script');
