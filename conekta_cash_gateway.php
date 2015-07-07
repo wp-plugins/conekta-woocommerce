@@ -214,12 +214,11 @@
             if ($this->send_to_conekta())
             {
                 // Mark as on-hold (we're awaiting the notification of payment)
-             $this->order->update_status('on-hold', __( 'Awaiting the conekta OXOO payment', 'woocommerce' ));
+                $this->order->update_status('on-hold', __( 'Awaiting the conekta OXOO payment', 'woocommerce' ));
                 
                 // Remove cart
                 $woocommerce->cart->empty_cart();
                 unset($_SESSION['order_awaiting_payment']);
-                
                 $result = array(
                                 'result' => 'success',
                                 'redirect' => $this->get_return_url($this->order)
@@ -229,7 +228,12 @@
             else
             {
                 $this->markAsFailedPayment();
-                $woocommerce->add_error(__('Transaction Error: Could not complete the payment'), 'woothemes');
+                global $wp_version;
+                if (version_compare($wp_version, '4.1', '>=')) {
+                        wc_add_notice(__('Transaction Error: Could not complete the payment', 'woothemes'), $notice_type = 'error');
+                } else {
+                	$woocommerce->add_error(__('Transaction Error: Could not complete the payment'), 'woothemes');
+                }
             }
         }
         
